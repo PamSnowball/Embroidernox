@@ -1,4 +1,4 @@
-package snowball.embroidernox.component.death;
+package snowball.embroidernox.util.component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import snowball.embroidernox.util.Utils;
 import snowball.embroidernox.util.Vector;
 
-public class ParticleDeath implements IDeath {
+public class Particle {
 	private static String i = "isColour";
 	
 	boolean isColour = false;
@@ -24,7 +24,7 @@ public class ParticleDeath implements IDeath {
 	Vector v = new Vector(0.0F, 0.0F, 0.0F);
 	Vector colour;
 	
-	public ParticleDeath(float[] particle, int atlas, Object[] hasRotation) {
+	public Particle(float[] particle, int atlas, Object[] hasRotation) {
 		this.atlas = atlas;
 		if (particle.length == 11) this.particleArray = particle;
 		else if (particle.length == 15)  {
@@ -38,7 +38,7 @@ public class ParticleDeath implements IDeath {
 		}
 	}
 	
-	public ParticleDeath(float[] particle, Vector colour, boolean isAdditive, Object[] hasRotation) {
+	public Particle(float[] particle, Vector colour, boolean isAdditive, Object[] hasRotation) {
 		this.isColour = true;
 		this.isAdditive = isAdditive;
 		this.colour = colour;
@@ -54,7 +54,7 @@ public class ParticleDeath implements IDeath {
 		}
 	}
 	
-	public ParticleDeath(float radius, float[] particle, int atlas, Object[] hasRotation) {
+	public Particle(float radius, float[] particle, int atlas, Object[] hasRotation) {
 		this.radius = radius;
 		this.atlas = atlas;
 		if (particle.length == 11) this.particleArray = particle;
@@ -69,7 +69,7 @@ public class ParticleDeath implements IDeath {
 		}
 	}
 	
-	public ParticleDeath(float radius, float[] particle, Vector colour, boolean isAdditive, Object[] hasRotation) {
+	public Particle(float radius, float[] particle, Vector colour, boolean isAdditive, Object[] hasRotation) {
 		this.isColour = true;
 		this.isAdditive = isAdditive;
 		this.colour = colour;
@@ -86,7 +86,7 @@ public class ParticleDeath implements IDeath {
 		}
 	}
 	
-	public ParticleDeath(float radius, Vector coordinates, float[] particle, int atlas, Object[] hasRotation) {
+	public Particle(float radius, Vector coordinates, float[] particle, int atlas, Object[] hasRotation) {
 		this.isCircle = true;
 		this.radius = radius;
 		this.v = coordinates;
@@ -103,7 +103,7 @@ public class ParticleDeath implements IDeath {
 		}
 	}
 	
-	public ParticleDeath(boolean isCircle, float radius, Vector coordinates, float[] particle, Vector colour, boolean isAdditive, 
+	public Particle(boolean isCircle, float radius, Vector coordinates, float[] particle, Vector colour, boolean isAdditive, 
 			Object[] hasRotation) {
 		this.isColour = true;
 		this.isAdditive = isAdditive;
@@ -121,11 +121,6 @@ public class ParticleDeath implements IDeath {
 			hasRotation[2] = true;
 			this.hasRot = hasRotation;
 		}
-	}
-	
-	public void death(List<String> death) {
-	 	death.add("PARTICLE_DEATH;");
-		deathPrint(death);
 	}
 	
 	public void deathPrint(List<String> death) {
@@ -158,22 +153,20 @@ public class ParticleDeath implements IDeath {
 		else death.add("hasXRot;0");
 	}
 	
-	public static ParticleDeath loadParticleDeath(float[] floatArray, boolean[] boolArray, Vector[] vectorArray, Object[] objArray, int atlas) {
+	public static Particle loadParticleDeath(float[] floatArray, boolean[] boolArray, Vector[] vectorArray, Object[] objArray, int atlas) {
 		if (vectorArray == null && boolArray == null && (floatArray.length == 11 || floatArray.length == 15))  {
-			return new ParticleDeath(floatArray, atlas, objArray);
+			return new Particle(floatArray, atlas, objArray);
 		} else if (vectorArray != null && boolArray != null && atlas == -1) {
-			return new ParticleDeath(floatArray, vectorArray[0], boolArray[0], objArray);
+			return new Particle(floatArray, vectorArray[0], boolArray[0], objArray);
 		} else if (vectorArray == null && boolArray == null && (floatArray.length == 12 || floatArray.length == 16)) { 
-			return new ParticleDeath(floatArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), atlas, objArray);
+			return new Particle(floatArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), atlas, objArray);
 		}  else if (vectorArray != null && boolArray != null && (floatArray.length == 12 || floatArray.length == 16) && atlas == -1) { 
-			return new ParticleDeath(floatArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), 
-					vectorArray[0], boolArray[0], objArray);
+			return new Particle(floatArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), vectorArray[0], boolArray[0], objArray);
 		} else if (vectorArray != null && boolArray == null && (floatArray.length == 12 || floatArray.length == 16)) {
-			return new ParticleDeath(floatArray[0], vectorArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length),
-					atlas, objArray);
+			return new Particle(floatArray[0], vectorArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), atlas, objArray);
 		} else if (vectorArray != null && boolArray != null) {
-			return new ParticleDeath(boolArray[0], floatArray[0], vectorArray[0], 
-					Arrays.copyOfRange(floatArray, 1, floatArray.length), vectorArray[1], boolArray[1], objArray);
+			return new Particle(boolArray[0], floatArray[0], vectorArray[0], Arrays.copyOfRange(floatArray, 1, floatArray.length), 
+					vectorArray[1], boolArray[1], objArray);
 		}
 		return null;
 	}

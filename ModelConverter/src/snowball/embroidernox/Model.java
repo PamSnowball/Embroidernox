@@ -1,4 +1,4 @@
-package snowball.embroidernox.main;
+package snowball.embroidernox;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import snowball.embroidernox.main.ModelConverter.EquiliModel;
+import snowball.embroidernox.ModelConverter.EquiliModel;
 
 public class Model {
 	private List<List<Integer>> pointer = new ArrayList<>();

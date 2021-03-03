@@ -1,4 +1,4 @@
-package snowball.embroidernox.main;
+package snowball.embroidernox;
 
 import java.io.File;
 import java.io.IOException;
